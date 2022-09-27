@@ -69,9 +69,10 @@
         if (!audio) {
             return;
         }
-        console.log(event.code);
-        console.log(event.keyCode);
-        audio.play();
+        // console.log(event.code);
+        // console.log(event.keyCode);
+        audio.currentTime = 0; // play the file from the beginning
+        audio.play(); // play the audio file
     }
 
     // reference: 
