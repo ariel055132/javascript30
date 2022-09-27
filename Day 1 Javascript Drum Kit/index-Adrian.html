@@ -58,51 +58,26 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
   <script>
-    /*
-    // add keyboard listener (keydown: press the button, keyup: release the button)
-    document.addEventListener("keydown", (event) => {
-      const key = document.createElement("p");
-      // show the pressed button in the console window
-      key.textContent = `KeyboardEvent: key='${event.key}' | code='${event.code}'`;
-      console.log(key.textContent);
-    });
-    */
-
     // Get all button elements of the page
     const keys = document.querySelectorAll('.key');
-    // show one of the buttons (for testing purposes only)
-    // console.log(keys[1]); 
 
-    // print all the buttons info (for testing purposes only)
-    keys.forEach(key => console.log(key));
-
+    // reference: 
+    // https://stackoverflow.com/questions/49680484/how-to-add-one-event-listener-for-all-buttons
+    // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
     window.addEventListener("keydown", (event) => { 
         // use keyCode because of data-key in html
+        // However, keyCode is no longer recommended (source: MDN document)
         const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`); // obtain the corresponding audio file 
+        // no corresponding audio file --> return (do nothing)
+        if (!audio) {
+            return;
+        }
         console.log(event.code);
         console.log(event.keyCode);
         audio.play();
     });
 
-    /*
-    keys.forEach(function(currentBtn) {
-        currentBtn.addEventListener("keydown", (event) => {
-            const audio = document.querySelector(`audio[data-key="${event.code}"]`);
-            
-            if (audio === null) {
-                return;
-            }
-            audio.play();
-        })
-    });
-
     
-    keys.forEach(key => {
-        key.addEventListener("keydown", (event) => {
-            console.log(event.key);
-        })
-    });
-    */
   </script>
 
 </body>
