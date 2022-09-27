@@ -58,7 +58,7 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
   <script>
-    // add keyboard listener (keydown: press the button)
+    // add keyboard listener (keydown: press the button, keyup: release the button)
     document.addEventListener("keydown", (event) => {
       const key = document.createElement("p");
       // show the pressed button in the console window
@@ -66,6 +66,9 @@
       console.log(key.textContent);
     });
 
+    // Get all button elements of the page
+    const keys = document.querySelectorAll('.key');
+    console.log(keys[1]);
   </script>
 
 </body>
