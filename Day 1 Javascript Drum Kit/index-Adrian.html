@@ -61,6 +61,7 @@
     // add keyboard listener (keydown: press the button)
     document.addEventListener("keydown", (event) => {
       const key = document.createElement("p");
+      // show the pressed button in the console window
       key.textContent = `KeyboardEvent: key='${event.key}' | code='${event.code}'`;
       console.log(key.textContent);
     });
