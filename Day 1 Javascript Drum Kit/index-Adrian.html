@@ -60,11 +60,8 @@
   <script>
     // Get all button elements of the page
     const keys = document.querySelectorAll('.key');
-
-    // reference: 
-    // https://stackoverflow.com/questions/49680484/how-to-add-one-event-listener-for-all-buttons
-    // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
-    window.addEventListener("keydown", (event) => { 
+    
+    function playSound(event) {
         // use keyCode because of data-key in html
         // However, keyCode is no longer recommended (source: MDN document)
         const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`); // obtain the corresponding audio file 
@@ -75,7 +72,12 @@
         console.log(event.code);
         console.log(event.keyCode);
         audio.play();
-    });
+    }
+
+    // reference: 
+    // https://stackoverflow.com/questions/49680484/how-to-add-one-event-listener-for-all-buttons
+    // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
+    window.addEventListener("keydown", playSound);
 
     
   </script>
