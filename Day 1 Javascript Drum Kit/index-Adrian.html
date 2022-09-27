@@ -58,6 +58,7 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
   <script>
+    /*
     // add keyboard listener (keydown: press the button, keyup: release the button)
     document.addEventListener("keydown", (event) => {
       const key = document.createElement("p");
@@ -65,10 +66,43 @@
       key.textContent = `KeyboardEvent: key='${event.key}' | code='${event.code}'`;
       console.log(key.textContent);
     });
+    */
 
     // Get all button elements of the page
     const keys = document.querySelectorAll('.key');
-    console.log(keys[1]);
+    // show one of the buttons (for testing purposes only)
+    // console.log(keys[1]); 
+
+    // print all the buttons info (for testing purposes only)
+    keys.forEach(key => console.log(key));
+
+    window.addEventListener("keydown", (event) => { 
+        // use keyCode because of data-key in html
+        const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`); // obtain the corresponding audio file 
+        console.log(event.code);
+        console.log(event.keyCode);
+        audio.play();
+    });
+
+    /*
+    keys.forEach(function(currentBtn) {
+        currentBtn.addEventListener("keydown", (event) => {
+            const audio = document.querySelector(`audio[data-key="${event.code}"]`);
+            
+            if (audio === null) {
+                return;
+            }
+            audio.play();
+        })
+    });
+
+    
+    keys.forEach(key => {
+        key.addEventListener("keydown", (event) => {
+            console.log(event.key);
+        })
+    });
+    */
   </script>
 
 </body>
