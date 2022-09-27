@@ -19,8 +19,27 @@
    1. 判斷傳入之propertyName是否為transform，若否則推出。
    2. 若為transform，刪除playing這個tag。
 
-# Javascript remarks
+# Remarks
 ## 鍵盤監聽
-1. 由KeyboardEvent來負責，監聽活動分為3種（keydown, keypress, keyup)。
-   * keydown：當**任何一個**按鍵被按下時，就會觸發keydown的事件
-   * keypress： 
+* 由KeyboardEvent來負責，監聽活動分為3種（keydown, keypress, keyup)。
+   1. keydown：當**任何一個**按鍵被按下時，就會觸發keydown事件
+   2. keypress：當**一個產生字元**（例如：數字，英文按鍵）的按鍵被按下時，才會觸發keypress事件（這個event已被標籤為以後不會支援的）
+   3. keyup：當**鬆開**按鍵的時候，就會觸發keyup事件
+## template literals 模板文字
+* 利用反引號（`）來組合字串，加上${}來進行變數的編輯
+## audio operation
+* HTML會使用audio來進行語音的embed指定的語音檔案
+* 可透過javascript來進行播放，暫停，停止等操作
+   1. element.play: 播放
+   2. element.pause: 暫停
+   3. element.stop: 停止
+   4. element.currentTime: 指定播放秒數，若將播放的時間軸設定為0，代表再播放為從頭播放
+## element.classList
+* 以array形式，回傳element的class值。若不存在的className會被忽略。
+* add()：新增多個className
+* remove()：移除多個className
+## Array.from
+* 這個function的目的是：將一個object或string轉為array。
+* 有看到其他人的寫法是這樣，原因是若無轉型為Array使用nodeList來forEach可能會導致某些瀏覽器版本錯誤。
+* 我自己是沒有寫成這樣子，但是還是能跑，不知道為什麼。
+* Reference: https://guahsu.io/2017/05/JavaScript30-01-Java-Script-Drum-Kit/
