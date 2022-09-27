@@ -61,20 +61,32 @@
     // Get all button elements of the page
     const keys = document.querySelectorAll('.key');
     
+    // remove transition effect of the button when other button are pressed
+    function removeTransition(event) {
+        event.target.classList.remove('playing');
+    }
+
+    // 1.play sound 
+    // 2.add effect to the button which playing the sound
     function playSound(event) {
         // use keyCode because of data-key in html
         // However, keyCode is no longer recommended (source: MDN document)
         const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`); // obtain the corresponding audio file 
+        const key = document.querySelector(`div[data-key="${event.keyCode}"]`); 
+        //console.log(key);
+        //console.log(typeof key);
+
         // no corresponding audio file --> return (do nothing)
         if (!audio) {
             return;
         }
-        // console.log(event.code);
-        // console.log(event.keyCode);
+
+        key.classList.add('playing'); // the button will highlight when pressed
         audio.currentTime = 0; // play the file from the beginning
         audio.play(); // play the audio file
     }
 
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
     // reference: 
     // https://stackoverflow.com/questions/49680484/how-to-add-one-event-listener-for-all-buttons
     // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
