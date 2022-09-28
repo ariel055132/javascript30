@@ -32,30 +32,107 @@
     const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
 
     // Array.prototype.filter()
+    // creates a shallow copy of a portion of a given array, filtered down to just the elements from the given array that pass the test implemented by the provided function
     // 1. Filter the list of inventors for those who were born in the 1500's
+    // 篩選16世紀出生之investors(發明家)
+    const fifteen = inventors.filter(investor => {
+      if (investor.year >= 1500 && investor.year <= 1599){
+        return true;
+      }
+    });
+    console.log(fifteen);
 
     // Array.prototype.map()
+    // creates a new array populated with the results of calling a provided function on every element in the calling array
     // 2. Give us an array of the inventors' first and last names
+    // 將investors的姓和名組合在一起，以array的形式表示
+    const fullName = inventors.map(investor => `${investor.first} ${investor.last}`);
+    //const fullName = inventors.map(inventor => inventor.first + ' ' + inventor.last);
+    console.log(fullName);
 
     // Array.prototype.sort()
+    // sorts the elements of an array in place and returns the reference to the same array, now sorted.
+    // The default sort order is ascending, built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // 依據生日，從大到小排序所有的investors
+    const birthRate = inventors.sort((inventorA, inventorB) => {
+      if (inventorA.year > inventorB.year) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    console.log(birthRate);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    // 對所有investors的在世時間進行加總
+
+    // For Loop Solution
+    let totalYear = 0;
+    for (let index = 0; index < inventors.length; index++) {
+      totalYear += (inventors[index].passed - inventors[index].year);
+    }
+    console.log(totalYear);
 
     // 5. Sort the inventors by years lived
+    // 依據年齡，從大到小排序所有的investors
+    const oldest = inventors.sort( (inventorA, inventorB) => {
+      const ageInventorA = inventorA.passed - inventorA.year;
+      const ageInventorB = inventorB.passed - inventorB.year;
+      if (ageInventorA < ageInventorB) {
+        return -1;
+      } else if (ageInventorA > ageInventorB) {
+        return 1;
+      } else { // same age
+        return 0;
+      }
+    });
+    console.log(oldest);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // 列出wiki中所有在巴黎，包含de的路名
+    
+    /*
+    const category = document.querySelector('.mw-category');
+    const links = Array.from(category.querySelectorAll('a'));
+    const de = links
+            .map(link => link.textContent)
+            .filter(streetName => streetName.includes('de'));
+    */
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    // 依據lastname，排序所有people裡的資料
+    const peopleSort = people.sort( (previousOne, nextOne) => {
+      // 1. 使用string的split，利用，來分開每個人的first name和last name
+      const [previousFirst, previousLast] = previousOne.split(',');
+      const [nextFirst, nextLast] = nextOne.split(',');
+      // 2. 透過lastname 進行sorting
+      if (previousLast > nextLast) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    console.log(peopleSort);
+    
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    // 分別計算data裡每個種類的數量
+    const transportation = data.reduce((accumulator, currentValue) => {
+      if(accumulator[currentValue]) {
+        accumulator[currentValue] ++;
+      } else {
+        accumulator[currentValue] = 1;
+      }
+      return accumulator;
+    }, {});
+    console.log(transportation);
   </script>
 </body>
 </html>
