@@ -67,8 +67,9 @@ function handleProgress() {
 }
 
 // scrub the progress bar
-function scrub() {
-
+function scrub(e) {
+    const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+    video.currentTime = scrubTime;
 }
 
 // hook up the event listeners
@@ -89,3 +90,10 @@ skipButtons.forEach(button => button.addEventListener('click', skip));
 ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
 // mousemove event is fired when the cursor is moving in the sliders.
 ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
+
+let mousedown = false;
+progressBar.addEventListener('click', scrub);
+// if mousedown is true then scrub
+progressBar.addEventListener('mousemove', (e) => mousedown && scrub(e));
+progressBar.addEventListener('mousedown', () => mousedown = true);
+progressBar.addEventListener('mouseup', () => mousedown = false);
