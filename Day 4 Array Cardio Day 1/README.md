@@ -32,18 +32,18 @@ const fifteen = inventors.filter(inventor => {
 * filter()會return array是因為filter()會在進行篩選前先建立一個array的shallow copy。然後根據這個shallow copy來進行篩選。
 
 ## 2. 將investors的姓和名組合在一起，以array的形式表示
-* 利用map將first name和last name組合，並返回array
+* 利用 **map()** 將first name和last name組合，並返回array
 ```javascript
-// 我自己的寫法，就單純的組合字串
+// 我自己的寫法，單純的組合字串
 const fullName = inventors.map(inventor => inventor.first + ' ' + inventor.last); 
-// 作者使用template literals 模板文字來寫
+// 作者使用template literals 模板文字來寫，看起來比較整潔
 const fullName = inventors.map(inventor => `${inventor.first} ${inventor.last}`); 
 ```
 * https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/map
 * map()和filter()一樣，都會建立一個array，並回傳該array
 
 ## 3. 依據出生年份，從大到小排序所有的investors
-* 利用sort()來進行排序
+* 利用 **sort()** 來進行排序
 ```javascript
 // 我自己的寫法
 const birthRate = inventors.sort((inventorA, inventorB) => {
@@ -57,12 +57,83 @@ const birthRate = inventors.sort((inventorA, inventorB) => {
 const ordered = inventors.sort((a, b) => a.year > b.year ? 1: -1)
 ```
 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-* 第一次寫的時候，我把return 1和return -1的位置分別寫成return true和return false，但是這樣子並不會回傳出結果
+* 第一次寫的時候，我把return 1和return -1的位置分別寫成return true和return false，但是這樣子並不會回傳結果
 * MDN文件指出，當你要在自行定義sort的compare函數[compare(a,b)]時:
   * return > 0: 將a放到b的後面
   * return < 0: 將a放到b的前面
   * return === 0: 保持a和b的順序
-* 然後才把return true和return false改成return 1和return -1
+* 這導致使用return true和return false沒有結果
+* 把return true和return false改成return 1和return -1就正常了
 
 ## 4. 對所有investors的在世時間進行加總
-* 利用reduce()
+* 利用 **reduce()** 來進行加總
+```javascript
+// 我自己的寫法（利用for loop)
+let totalYears = 0;
+for (let i = 0; i < inventors.length; i++) {
+    totalYears += (investors[i].passed - inventors[i].year);
+}
+// 作者寫法（利用reduce）
+const totalYear = inventors.reduce((total, inventor) => {
+    return total + (inventor.passed - inventor.year);
+}, 0);
+```
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+
+## 5. 依據年齡/inventor的在世時間，從大到小排序所有的investors
+* 跟第三題差不多，計算每個inventor的年齡，然後進行 **sort()**
+```javascript
+const oldest = inventors.sort( (inventorA, inventorB) => {
+    const ageInventorA = inventorA.passed - inventorA.year;
+    const ageInventorB = inventorB.passed - inventorB.year;
+    if (ageInventorA < ageInventorB) {
+        return -1;
+    } else if (ageInventorA > ageInventorB) {
+        return 1;
+    } else { // same age
+        return 0;
+    }
+});
+```
+
+## 6. 列出wiki中所有在巴黎，包含de的路名
+```javascript
+const category = document.querySelector('.mw-category');
+const links = Array.from(category.querySelectorAll('a'));
+const de = links
+            .map(link => link.textContent)
+            .filter(streetName => streetName.includes('de'));
+```
+
+## 7. 依據lastname，排序所有people裡的資料
+* 由於people裡面的資料都是逗點字串，例如：['Beck, Gleen'] 
+* 利用string的方法 **split()** 來分開people裡面的last name和first name
+* 使用Array來接受split()的結果是因為split()會return Array。
+* 將接受到的Array進行 **sort()**
+```javascript
+const peopleSort = people.sort( (previousOne, nextOne) => {
+    // 1. 使用string的split，利用，來分開每個人的first name和last name
+    const [previousFirst, previousLast] = previousOne.split(',');
+    const [nextFirst, nextLast] = nextOne.split(',');
+    // 2. 利用lastname進行sorting
+    if (previousLast > nextLast) {
+        return 1;
+    } else {
+        return -1;
+    }
+});
+```
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split
+
+## 8. 分別計算data內每個種類的數量
+* 利用 **reduce()** 來進行
+```javascript
+const transportation = data.reduce((accumulator, currentValue) => {
+    if(accumulator[currentValue]) {
+        accumulator[currentValue] ++;
+    } else {
+        accumulator[currentValue] = 1;
+    }
+      return accumulator;
+}, {});
+```
