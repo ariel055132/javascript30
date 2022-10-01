@@ -69,10 +69,18 @@
     // 對所有investors的在世時間進行加總
 
     // For Loop Solution
+    /*
     let totalYear = 0;
     for (let index = 0; index < inventors.length; index++) {
       totalYear += (inventors[index].passed - inventors[index].year);
     }
+    console.log(totalYear);
+    */
+
+    // reduce Solution
+    const totalYear = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0);
     console.log(totalYear);
 
     // 5. Sort the inventors by years lived
