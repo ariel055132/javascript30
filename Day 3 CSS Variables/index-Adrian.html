@@ -8,19 +8,42 @@
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
   <div class="controls">
+    <!-- Change the position of the picture -->  
     <label for="spacing">Spacing:</label>
     <input type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
 
+    <!-- Blur the picture-->
     <label for="blur">Blur:</label>
     <input type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
 
+    <!-- Change the border color of picture-->
+    <!-- A color wheel will be shown to input the desired colors-->
     <label for="base">Base Color</label>
     <input type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" alt="A picture for demo">
 
   <style>
+
+    /* Represents the <html> element and identical to selector html */
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    /* Operation to image */
+    img {
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+    }
+    
+    /* Change the color of JS in the title */
+    .h1 {
+      color: var(--base);
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -48,8 +71,19 @@
   </style>
 
   <script>
+    function handleUpdate() {
+      //console.log(this.dataset); // show the whole output of recently changed objects as DOMObject
+      //console.log(this.value); // show the current value of inputs that changed its value recently
+      const suffix = this.dataset.sizing || ''; // suffix --> px
+      
+      // Change the CSS propertities in JavaScript
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
+    
+    const inputs = document.querySelectorAll('.controls input'); 
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
   </script>
 
 </body>
 </html>
-Footer
