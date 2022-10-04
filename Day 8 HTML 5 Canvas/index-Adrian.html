@@ -6,7 +6,68 @@
 </head>
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
+
 <script>
+  // grab the canvas
+  const canvas = document.querySelector('#draw');
+  // 建立Canvas的操作元素 (Do the drawing of the canvas)
+  const ctx = canvas.getContext('2d');
+  // 設定Cavnas的width和height
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  // 設定畫線的特性
+  ctx.strokeStyle = '#BADA55';
+  ctx.lineJoin = 'round';
+  ctx.linecap = 'round';
+  ctx.lineWidth = 100; // the width of the line
+
+  let isDrawing = false; // 按下 -> true，release -> false
+  let lastX = 0; // mouse cursor最後release的X座標
+  let lastY = 0; // mouse cursor最後release的Y座標
+  let hue = 0  // Change the color of the line when drawing
+  let direction = true;
+
+  // drawing in the canvas
+  function draw(event) {
+    if (!isDrawing) return; // stop the from running when the mouse opeartion are not moused down
+    console.log(event);
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.lineWidth = hue;
+    ctx.beginPath();
+    // start with
+    ctx.moveTo(lastX, lastY); 
+    // go to
+    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.stroke(); // draw the stroke
+    [lastX, lastY] = [event.offsetX, event.offsetY];
+    
+    // change the color of the line by editing the value of hsl
+    hue++;
+    if (hue >= 360) {
+      hue = 0;
+    }
+
+    // change the direction of the line 
+    if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+      direction = !direction;
+    }
+    if (direction) {
+      ctx.lineWidth++;
+    } else {
+      ctx.lineWidth--;
+    }
+  } 
+
+  // when the mouse cursor is moving, activate draw function
+  canvas.addEventListener('mousemove', draw);
+  // when the mouse is pressed, activate draw function, set isDrawing to true --> drawing 
+  canvas.addEventListener('mousedown', (event) => {
+    isDrawing = true;
+    // draw another stroke when the mouse cursor is moved after a line is drawn
+    [lastX, lastY] = [event.offsetX, event.offsetY];
+  });
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false);
 </script>
 
 <style>
