@@ -11,6 +11,7 @@
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
+    // Break-on --> Attribute contributions to check function
     function makeGreen() {
       const p = document.querySelector('p');
       p.style.color = '#BADA55';
@@ -18,30 +19,64 @@
     }
 
     // Regular
+    console.log("hello");
 
-    // Interpolated
+    // Interpolated %s
+    console.log("hello I am a %s string!", 'abc');
 
-    // Styled
+    // Styled (use %c to add css propertities to the text)
+    console.log("%c I am some great text", "font-size: 50px");
 
-    // warning!
+    // warning!  
+    // shows warning in the console window, the icon with exclamation mark
+    console.warn("warning!!");
 
     // Error :|
+    // show error in the console window, the icon with a red cross
+    console.error("Shit");
 
     // Info
+    // show text in the console window, the incon with a i 
+    console.info('info');
 
     // Testing
+    // assert: only fire if something is wrong
+    console.assert(1 === 1, 'Wrong');
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('ouch'), 'That is wrong');
 
     // clearing
+    // clear your console
+    console.clear()
 
     // Viewing DOM Elements
+    console.log(p);
+    console.dir(p);
 
     // Grouping together
+    console.clear();
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old.`);
+      console.groupEnd(`${dog.name}`);
+    })
 
     // counting
+    console.count('Wes');
+    console.count('Wes');
 
     // timing
-
+    // how long something takes
+    console.time('fetching data');
+    fetch('https://api.github.com/users/wesbos')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data');
+        console.log(data)
+      });
+    
+    console.table(dogs);
   </script>
 </body>
 </html>
-Footer
