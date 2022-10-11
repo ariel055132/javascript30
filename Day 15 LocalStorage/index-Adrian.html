@@ -26,10 +26,77 @@
   </div>
 
 <script>
+  // obtain the form and ul element
+  // declare an empty array to save the new data
   const addItems = document.querySelector('.add-items');
-  const itemsList = document.querySelector('.plates');
-  const items = [];
+  const itemsList = document.querySelector('.plates'); // load all dishes
+  const items = JSON.parse(localStorage.getItem('items')) ||[];
 
+  function addItem(event) {
+    //console.log("hello");
+    // stop the page from reloading
+    event.preventDefault(); 
+    // select the input value of the form
+    const text = (this.querySelector('[name=item]')).value;
+    // declare the item object, the name of that item and whether it is done
+    const item = {
+      text: text,
+      done: false
+    }
+    console.log(item);
+    items.push(item); // push the item to the list for saving
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items));
+    // empty the input space
+    this.reset(); // this -> form
+  }
+
+  // show the list in HTML with list param
+  function populateList(plates = [], platesList = itemsList) {
+    platesList.innerHTML = plates.map((plate, index) => {
+      // add a list in HTML
+      // link the checkbox and label with item(index) --> original 
+      // delete function is added --> new
+      return `
+        <li>
+          <input type="checkbox" data-index=${index} id="item${index}" ${plate.done ? 'checked' : ''}/>
+          <label for="item${index}">${plate.text}</label>
+          <span data-index=${index}> delete</span>
+        </li>
+      `;
+    }).join('');;
+  }
+
+  function toggleDone(event) {
+    // get the data-index value of checkbox
+    const el = event.target;
+    const index = el.dataset.index;
+
+    // if event.target is input --> change the status
+    if (event.target.matches('input')) {
+      // change the status of done from true and false (T-->F, F-->T)
+      items[index].done = !items[index].done;
+      // put the updated status into localStorage
+      localStorage.setItem('items', JSON.stringify(items));
+      // update the list
+      populateList(items, itemsList);
+    }
+
+    // if event target is span --> delete
+    if (event.target.matches('span')) {
+      // delete the item from items
+      items.splice(index, 1); // 2nd parameter means remove one item only
+      // put the updated status into localStorage
+      localStorage.setItem('items', JSON.stringify(items));
+      // update the list
+      populateList(items, itemsList);
+    }
+  }
+
+  addItems.addEventListener('submit', addItem);
+  itemsList.addEventListener('click', toggleDone);
+
+  populateList(items, itemsList);
 </script>
 
 
