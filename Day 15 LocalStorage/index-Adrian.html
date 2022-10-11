@@ -23,6 +23,19 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+
+    <style>
+      .checkMethod {
+        padding: 0;
+        list-style: none;
+      }
+    </style>
+    <ul class="checkMethod">
+      <li>
+        <input type="checkbox" class="checkAll">
+        <label>Check All</label>
+      </li>
+    </ul>
   </div>
 
 <script>
@@ -30,6 +43,7 @@
   // declare an empty array to save the new data
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates'); // load all dishes
+  const checkAllBtn = document.querySelector('.checkAll'); // check all function   
   const items = JSON.parse(localStorage.getItem('items')) ||[];
 
   function addItem(event) {
@@ -93,6 +107,18 @@
     }
   }
 
+  const checkAll = function(event) {
+    const checkStatus = event.target.checked;
+    items.forEach(element => {
+      element.done = checkStatus;
+    });
+    // put the updated status into localStorage
+    localStorage.setItem('items', JSON.stringify(items));
+    // update the list
+    populateList(items, itemsList);
+  }
+
+  checkAllBtn.addEventListener('click', checkAll);
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone);
 
