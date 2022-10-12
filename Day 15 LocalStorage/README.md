@@ -84,3 +84,62 @@ this.reset();
 * 這樣子就把作者教授的內容都實作出來了。
 
 ## 4. 增加delete功能
+* 刪除list裡面的element用
+* 需在每一個在list的element新增刪除按鍵，如下所示：
+```javascript
+return `
+    <li>
+        <input type="checkbox" data-index=${index} id="item${index}" ${plate.done ? 'checked' : ''}/>
+        <label for="item${index}">${plate.text}</label>
+        <span data-index=${index}> delete</span>
+    </li>
+      `;
+```
+* 上述程式碼會使每次output時多一個delete文字在後方
+* 在toggleDone新增若點取span，就從items刪除該物件（利用data-index裡的數字），調整如下
+```javascript
+function toggleDone(event) {
+    // get the data-index value of checkbox
+    const el = event.target;
+    const index = el.dataset.index;
+
+    // if event.target is input --> change the status
+    if (event.target.matches('input')) {
+      // change the status of done from true and false (T-->F, F-->T)
+      items[index].done = !items[index].done;
+      // put the updated status into localStorage
+      localStorage.setItem('items', JSON.stringify(items));
+      // update the list
+      populateList(items, itemsList);
+    }
+
+    // Here here here
+    // if event target is span --> delete
+    if (event.target.matches('span')) {
+      // delete the item from items
+      items.splice(index, 1); // 2nd parameter means remove one item only
+      // put the updated status into localStorage
+      localStorage.setItem('items', JSON.stringify(items));
+      // update the list
+      populateList(items, itemsList);
+    }
+  }
+```
+
+## 5. 新增全選/全部取消的功能
+* 在表格的下方新增一個用來操作全選/全部取消的按鍵。
+* 撰寫對應的功能，如下：
+```javascript
+const checkAll = function(event) {
+    const checkStatus = event.target.checked;
+    items.forEach(element => {
+      element.done = checkStatus;
+    });
+    // put the updated status into localStorage
+    localStorage.setItem('items', JSON.stringify(items));
+    // update the list
+    populateList(items, itemsList);
+  }
+
+  checkAllBtn.addEventListener('click', checkAll);
+```
