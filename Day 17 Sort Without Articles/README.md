@@ -37,3 +37,5 @@ document.querySelector('#bands').innerHTML =
 let band = document.getElementById("bands");
 band.innerHTML = sorted.map(band => `<li>${band}</li>`).join('');
 ```
+* 要使用join的原因是：因為原本array使用,來進行分割
+* 若不使用join的話，會導致,一併渲染到HTML中
