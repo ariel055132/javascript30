@@ -46,7 +46,32 @@
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+// sort bands without The, A, An
+// Put the actual sorting results into HTML
 
+// sort the band name one by one with regex
+function strip(bandName) {
+    return bandName.replace(/^(a |the |an)/i, '').trim();
+}
+
+const sorted = bands.sort((a, b) => {
+    if (strip(a) > strip(b)) {
+        return 1;
+    } else {
+        return -1;
+    }
+    // return strip(a) > strip(b) ? 1 : -1;
+});
+
+let band = document.getElementById("bands");
+band.innerHTML = sorted.map(band => `<li>${band}</li>`).join('');
+
+/*
+document.querySelector('#bands').innerHTML = 
+    sorted
+        .map(band => `<li>${band}</li>`)
+        .join('');
+*/
 </script>
 
 </body>
