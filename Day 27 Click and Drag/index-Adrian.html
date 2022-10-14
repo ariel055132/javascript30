@@ -35,7 +35,48 @@
   </div>
 
 <script>
-  
+  const slider = document.querySelector('.items');
+  // clicking on the slider of not
+  let isDown = false;
+  // record the initial click down x-coordinates
+  let startX;
+  let scrollLeft;
+
+  // cursor is pressed
+  slider.addEventListener('mousedown', (event) => {
+    isDown = true;
+    // add active tag to slider, CSS transitions can be triggered
+    slider.classList.add('active');
+    startX = event.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+    //console.log(startX);
+  });
+
+  // over the range
+  slider.addEventListener('mouseleave', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  // cursor is released
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
+
+  // cursor is moving
+  slider.addEventListener('mousemove', (event) => {
+    if (!isDown) return; // stop the function from running if isDown = false;
+    event.preventDefault();
+    const x = event.pageX - slider.offsetLeft;
+    console.log({x, startX});
+    // how far we go from the initial position to the current position
+    const walk = x - startX;
+    console.log(walk);
+    slider.scrollLeft = scrollLeft - walk;
+    //console.log(isDown);
+    //console.log("worked");
+  });
 </script>
 
   </body>
