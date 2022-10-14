@@ -42,10 +42,10 @@
       font-size: 20px;
       background-size:cover;
       background-position:center;
-      flex: 1;
+      flex: 1; /* evenly distribute */
       justify-content: center;
       align-items: center;
-      display: flex;
+      display: flex;  /* nested the flexbox */
       flex-direction: column;
     }
 
@@ -65,7 +65,8 @@
       justify-content: center;
       align-items: center;
     }
-
+    
+    /* Put the words out of screen */
     .panel > *:first-child { transform: translateY(-100%) }
     .panel.open-active > *:first-child { transform: translateY(0) }
     .panel > *:last-child { transform: translateY(100%) }
