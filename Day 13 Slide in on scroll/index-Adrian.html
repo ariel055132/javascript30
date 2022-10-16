@@ -45,6 +45,7 @@
   </div>
 
   <script>
+    // only runs the function about 20 times
     function debounce(func, wait = 20, immediate = true) {
       var timeout;
       return function() {
@@ -60,6 +61,28 @@
       };
     }
 
+    function checkSlide(event) {
+      console.log(window.scrollY);
+      sliderImages.forEach(sliderImage => {
+        // half way through the image
+        const slideInAt = (window.scrollY + window.innerHeight) - (sliderImage.height / 2);
+        console.log(slideInAt);
+        // bottom of the image
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+        const isHalfShown = slideInAt > sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+        if (isHalfShown && isNotScrolledPast) {
+          sliderImage.classList.add('active');
+        } else {
+          sliderImage.classList.remove('active');
+        }
+
+      });
+    }
+
+    const sliderImages = document.querySelectorAll('.slide-in');
+    
+    window.addEventListener('scroll', debounce(checkSlide));
   </script>
 
   <style>
