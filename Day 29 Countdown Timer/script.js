@@ -38,10 +38,18 @@ function displayTimeLeft(seconds) {
 }
 
 function displayEndTime(timestamp) {
-    const end = new Date(timestamp);
-    const hour = end.getHours();
-    const minutes = end.getMinutes();
-    endTime.textContent = `${hour}:${minutes}`;
+    let end = new Date(timestamp);
+    let hour = end.getHours();
+    // adjust the hour 
+    if (hour > 12) {
+        hour -= 12;
+    }
+    let minutes = end.getMinutes();
+    // padding with 0 if minutes < 10
+    if (minutes < 10) {
+        minutes = '0' + minutes;
+    }
+    endTime.textContent = `Be back at ${hour}:${minutes}`;
 }
 
 function startTimer() {
@@ -52,3 +60,13 @@ function startTimer() {
 
 console.log(buttons);
 buttons.forEach(button => button.addEventListener('click', startTimer));
+
+// input field
+document.customForm.addEventListener('submit', function(event) {
+    // prevent refresh the value after reload
+    event.preventDefault();
+    const mins = this.minutes.value;
+    // convert minutes to seconds
+    timer(mins * 60);
+    this.reset();
+})
