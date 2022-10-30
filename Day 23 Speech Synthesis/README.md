@@ -59,3 +59,18 @@ options.forEach(option => option.addEventListener('change', setOption));
 speakButton.addEventListener('click', toggle); // play
 stopButton.addEventListener('click', () => toggle(false)); // pause 
 ```
+
+# Remarks
+* browser使用**SpeechSynthesisUtterance**object來提供語音服務，詳細的properties如下：
+    1. utterance.text：說話內容（在這個project就是使用者在textarea的輸入）
+    2. utterance.lang：語言
+    3. utterance.pitch：音頻
+    4. utterance.rate：語速
+    5. utterance.voice：聲音
+    6. utterance.volume：音量
+* user可使用speechSynthesis來對SpeechSynthesisUtterance()進行操作，操作方式如下：
+    1. speechSynthesis.speak()：開始說話（播放）
+    2. speechSynthesis.cancel()：取消說話（暫停）
+    3. speechSynthesis.pause()：暫停說話
+    4. speechSynthesis.getVoices()：取得所有SpeechSynthesisVoice語音物件的所有內容。
+    5. speechSynthesis.resume()：重啟說話。
