@@ -54,7 +54,23 @@
   </div>
 
 <script>
+  const nav = document.getElementById('main'); // document.querySelector('#main')
+  const topofNav = nav.offsetTop;
 
+  // window.scrollY: the total scrolled distance
+  // element.offsetTop: the distance from the element to the top (window)
+  function fixNav() {
+    console.log(topofNav);
+    if (window.scrollY >= topofNav) {
+      document.body.style.paddingTop = nav.offsetHeight + 'px';
+      document.body.classList.add('fixed-nav');
+    } else {
+      document.body.style.paddingTop = 0;
+      document.body.classList.remove('fixed-nav');
+    }
+  }
+
+  window.addEventListener('scroll', fixNav);
 </script>
 
 </body>
