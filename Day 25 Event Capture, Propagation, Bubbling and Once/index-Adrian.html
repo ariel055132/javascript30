@@ -40,6 +40,28 @@
 <button></button>
 <script>
 
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  function logText(event) {
+    console.log(this.classList.value);
+    e.stopPropagation(); // stop bubbling
+  }
+
+  document.body.addEventListener('click', logText);
+  
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture : false,
+    once : true // listen to click and unbind itself
+  }));
+  // capture --> ripple down and capture all data (top to bottom)
+  // bubble --> bottom to top
+
+  button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {
+    once: true
+  });	
 </script>
 </body>
 </html>
