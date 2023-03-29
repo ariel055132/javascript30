@@ -113,7 +113,21 @@
         }
     </style>
     <script>
+        const hourHand = document.querySelector('.hour-hand'); // 時針
+        const minHand = document.querySelector('.min-hand');  // 分針
+        const secondHand = document.querySelector('.second-hand'); // 秒針
 
+        function setDate() {
+            const currentTime = new Date();
+            let seconds = currentTime.getSeconds();
+            let mins = currentTime.getMinutes();
+            let hours = currentTime.getHours();
+
+            console.log(seconds, mins, hours);
+        }
+        
+        setDate();
+        setInterval(setDate, 1000);
     </script>
 </body>
 
