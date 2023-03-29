@@ -79,6 +79,7 @@
         //console.log(second);
 
         //let hourDegree = (hour / 12) * 360;
+        //需要加90的原因是：一開始的畫面就事在9點（270度），因此需要加上90度來補足從12點開始
         let hourDegree = (hour / 12) * 360 + 90;
         // 先在css裏的hand定義transform
         hourHand.style.transform = `rotate(${hourDegree}deg)`;
