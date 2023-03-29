@@ -43,3 +43,5 @@
 * 有看到其他人的寫法是這樣，原因是若無轉型為Array使用nodeList來forEach可能會導致某些瀏覽器版本錯誤。
 * 我自己是沒有寫成這樣子，但是還是能跑，不知道為什麼。
 * Reference: https://guahsu.io/2017/05/JavaScript30-01-Java-Script-Drum-Kit/
+## 鍵盤按鈕的Tag
+* kbd: The keyboard input element，只接受從keyboard的輸入
