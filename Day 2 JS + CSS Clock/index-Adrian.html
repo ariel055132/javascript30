@@ -90,6 +90,7 @@
         secondHand.style.transform = `rotate(${secondDegree}deg)`;
       }
 
+      // 每一秒呼叫一次setDate（重新取得當前時間，並進行更新）
       setInterval(setDate, 1000);
       setDate();
     </script>
