@@ -16,6 +16,7 @@
     </div>
 
     <style>
+        /* The CSS content is come from  https://www.youtube.com/watch?v=O1YsB3qxO4g&list=PLEfh-m_KG4dYbxVoYDyT_fmXZHnuKg2Fq&index=2&ab_channel=Alex%E5%AE%85%E5%B9%B9%E5%98%9B */
         html {
             background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
             background-size: cover;
@@ -116,14 +117,24 @@
         const hourHand = document.querySelector('.hour-hand'); // 時針
         const minHand = document.querySelector('.min-hand');  // 分針
         const secondHand = document.querySelector('.second-hand'); // 秒針
-
+        
+        // 取得當前時間 （時，分，秒）
         function setDate() {
             const currentTime = new Date();
-            let seconds = currentTime.getSeconds();
-            let mins = currentTime.getMinutes();
-            let hours = currentTime.getHours();
+            let seconds = currentTime.getSeconds(); // 時 
+            let mins = currentTime.getMinutes(); // 分
+            let hours = currentTime.getHours(); // 秒
 
             console.log(seconds, mins, hours);
+
+            let secondDeg = seconds / 60 * 360;
+            secondHand.style.transform = `rotate(${secondDeg}deg)`;
+
+            let minuteDeg = mins / 60 * 360;
+            minHand.style.transform = `rotate(${minuteDeg}deg)`;
+
+            let hourDeg = hours / 12 * 360;
+            hourHand.style.transform = `rotate(${hourDeg}deg)`;
         }
         
         setDate();
