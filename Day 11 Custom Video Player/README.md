@@ -27,10 +27,19 @@ const ranges = player.querySelectorAll('.player__slider');
 ```javascript
 function togglePlay(){
 	const method = video.paused ? 'play' : 'pause';
-	video[method]();
+	video[method](); // 直接採取中括號寫法蠻好的，避免下面的判斷，更加精簡
+}
+// 另外一種寫法（使用判斷式）
+function tooglePlay() {
+  if (video.paused) {
+    video.play();
+  } else {
+    video.pause();
+  }
 }
 video.addEventListener('click', togglePlay);
 toggle.addEventListener('click', togglePlay);
+
 ```
 
 ## Step 3：改變播放/暫停按鈕的樣式
@@ -43,6 +52,7 @@ function updateButton(){
 video.addEventListener('play', updateButton);
 video.addEventListener('pause', updateButton);
 ```
+* 這個功能其實可以包含在togglePlay的function裏
 
 ## Step 4：控制音量
 * 作者其實已經寫好音量那邊的HTML程式碼，只要進行listen相關的值就可以了
@@ -79,3 +89,9 @@ function handleProgress(){
 video.addEventListener('timeupdate', handleProgress);
 ```
 * 拖拉效果則是利用offsetX來取得div的X值，並除以div的全長來得到percentage，乘上影片時長即可得到當前的播放時間
+
+# Remarks
+* 其實HTML Code的Video可以加上**control**來新增控制器，不一定要像作者這樣子寫
+```
+<video class="player__video viewer" src="https://player.vimeo.com/external/194837908.sd.mp4?s=c350076905b78c67f74d7ee39fdb4fef01d12420&profile_id=164"></video controls>
+```
