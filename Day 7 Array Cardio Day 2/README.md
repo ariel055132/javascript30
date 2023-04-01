@@ -50,7 +50,7 @@ const comment = comments.find(comment => comment.id == 823423);
 ```javascript
 // 我自己的寫法
 const index = comments.findIndex(comment => comment.id == 823423);
-comments.splice(index, 1); // use splice to remove
+comments.splice(index, 1); // use splice to remove, remove 1 item only (which is index)
 
 // 作者寫法
 const index = comments.findIndex(comment => comment.id === 823423);
