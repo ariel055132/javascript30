@@ -38,9 +38,13 @@ const fifteen = inventors.filter(inventor => {
 const fullName = inventors.map(inventor => inventor.first + ' ' + inventor.last); 
 // 作者使用template literals 模板文字來寫，看起來比較整潔
 const fullName = inventors.map(inventor => `${inventor.first} ${inventor.last}`); 
+// 使用foreach的解法
+let ans = [];
+inventors.forEach(inventor => ans.push(inventor.first + ' ' + inventor.last));
 ```
 * https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/map
 * map()和filter()一樣，都會建立一個array，並回傳該array
+* map()和forEach的分別在於前者會自行創建一個container去儲存相關結果，後者需要使用者自行設定一個container儲存結果。
 
 ## 3. 依據出生年份，從大到小排序所有的investors
 * 利用 **sort()** 來進行排序
@@ -64,21 +68,30 @@ const ordered = inventors.sort((a, b) => a.year > b.year ? 1: -1)
   * return === 0: 保持a和b的順序
 * 這導致使用return true和return false沒有結果
 * 把return true和return false改成return 1和return -1就正常了
+* Note: 以前的sort在不同的browser不一定是穩定(stable，都能跑出相同結果)的，但是現在基本所有的browser都是穩定sort。
 
 ## 4. 對所有investors的在世時間進行加總
 * 利用 **reduce()** 來進行加總
 ```javascript
-// 我自己的寫法（利用for loop)
+// 我自己的寫法（利用for/forEach loop)
 let totalYears = 0;
 for (let i = 0; i < inventors.length; i++) {
     totalYears += (investors[i].passed - inventors[i].year);
 }
+inventors.forEach((inventor)=> {
+    totalYears += (inventor.passed - inventor.year);
+})
 // 作者寫法（利用reduce）
 const totalYear = inventors.reduce((total, inventor) => {
     return total + (inventor.passed - inventor.year);
 }, 0);
 ```
 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+* Reduce(): 從array裏面取得每一筆資料，並進行加總。
+```
+1: total = 0, inventor = { first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 }, 
+2: total = 0 + (1955 - 1879)
+```
 
 ## 5. 依據年齡/inventor的在世時間，從大到小排序所有的investors
 * 跟第三題差不多，計算每個inventor的年齡，然後進行 **sort()**
@@ -137,3 +150,6 @@ const transportation = data.reduce((accumulator, currentValue) => {
       return accumulator;
 }, {});
 ```
+
+# Remarks
+* 除了使用console.log()來查看array裏面的值，也可以使用console.table()將array內容以table顯示。
